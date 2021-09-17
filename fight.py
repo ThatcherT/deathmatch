@@ -232,9 +232,13 @@ class attacks:
         spec = 0
         heal = 0
         return [percentile, hit, spec, heal]
+
+
 def takedamage(fighter, hit):
     fighter.health -= hit
     return fighter.health
+
+
 def fight():
     p1 = fighter()
     p2 = fighter()
@@ -364,7 +368,7 @@ def fight():
         if p1.poison < 30:
             p1.poison = 0
         if p1.health > 1500:
-            pl.health = 1500
+            p1.health = 1500
         if p2.health > 1500:
             p2.health = 1500
         if p1.health < 0:
@@ -378,4 +382,5 @@ def fight():
             break
     return
 
-fight()
+if __name__ == '__main__':
+    fight()
