@@ -1,0 +1,36 @@
+version: "3"
+
+volumes:
+  deathmatchpgdata:
+
+services:
+  # nginx:
+  #   image: nginx:1.15-alpine
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - spotiflyweb
+  #   volumes:
+  #     - ./data/nginx:/etc/nginx/conf.d
+  # spotiflypostgres:
+  #   restart: always
+  #   image: postgres:12.0-alpine
+  #   volumes:
+  #     - spotiflypgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - 5432:5432
+  #   env_file:
+  #     - .env
+  deathmatchweb:
+    restart: always
+    build: .
+    image: thatcherthornberry/deathmatch:latest
+    command: gunicorn deathmatch.wsgi:application --bind 0.0.0.0:8002
+    expose:
+      - "8001"
+    env_file:
+      - .env
+networks:
+  default:
+    external: true
+    name: thatcherthornberry

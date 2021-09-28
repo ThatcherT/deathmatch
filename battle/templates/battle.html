@@ -1,0 +1,118 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head> 
+
+<p id="enemy_attack_log" style="color:red;"></p>
+<p id="player_attack_log" style="color:black;"></p>
+<p id="enemy_attack_log2" style="color:red;"></p>
+<p id="player_attack_log2" style="color:black;"></p>
+Player Health <p id="health_player" style="color: green"></p>
+Enemy Health<p id="health_enemy" style="color: red"></p>
+Enemy Spec<p id="spec_enemy" style="color: blue"></p>
+Player Spec<p id="spec_player" style="color: blue"></p>
+<p id="poison_damage_player" hidden="true"></p>
+<p id="poison_damage_enemy" hidden="true"></p>
+<p id="frozen_player" hidden="true"></p>
+<p id="frozen_enemy" hidden="true"></p>
+
+
+
+<form action="" id='weaponform' hidden="True">
+  {% csrf_token %}
+  <label for="weapon">Weapon:</label>
+  <input type="text" id="weapon" name="weapon"><br><br>
+  <input type="submit" value="Attack">  
+</form>
+
+<form action="" id='startform'>
+    <input type="submit" value="Begin">
+</form>
+
+<script>
+
+    var csrftoken = "{{ csrf_token }}";
+    
+    $("#startform").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'start-battle' %}",
+            headers: {'X-CSRFToken': csrftoken },
+            success: function(data){
+                console.log(data)
+                $("#health_player").html(data['health_player'])
+                $("#health_enemy").html(data['health_enemy'])
+                $("#spec_player").html(data['spec_player'])
+                $("#spec_enemy").html(data['spec_enemy'])
+                $('#poison_damage_player').html(data.poison_damage_player)
+                $('#poison_damage_enemy').html(data.poison_damage_enemy)
+                $('#frozen_player').html(data.frozen_player)
+                $('#frozen_enemy').html(data.frozen_enemy)  
+                $('#enemy_attack_log').html(data.enemy_attack_log)
+                // hide start form
+                $("#startform").hide()
+                // unhide weapon form
+                $("#weaponform").show()
+            }
+        })
+    })
+
+
+    $("#weaponform").submit(function(e){
+        console.log($(this).val())
+        var weapon = $("#weapon").val();
+        e.preventDefault();
+        console.log(weapon);
+        console.log('weapon selected ^')
+        var health_player = $("#health_player").html()
+        var health_enemy = $("#health_enemy").html()
+        var spec_player = $("#spec_player").html()
+        var spec_enemy = $("#spec_enemy").html()
+        var poison_damage_player = $("#poison_damage_player").html()
+        var poison_damage_enemy = $("#poison_damage_enemy").html()
+        var frozen_player = $("#frozen_player").html()
+        var frozen_enemy = $("#frozen_enemy").html()
+        console.log(frozen_enemy)
+
+        $.ajax({
+            url: "{% url 'attack' %}",
+            headers: {'X-CSRFToken': csrftoken },
+            type: "POST",
+            data: {
+                weapon: weapon,
+                health_player: health_player,
+                health_enemy: health_enemy,
+                spec_player: spec_player,
+                spec_enemy: spec_enemy,
+                poison_damage_player: poison_damage_player,
+                poison_damage_enemy: poison_damage_enemy,
+                frozen_player: frozen_player,
+                frozen_enemy: frozen_enemy,
+            },
+            success: function(data){
+                if (data.error == 'Illegal weapon'){
+                    alert('Illegal weapon')
+                }
+                // update html with new values
+                $('#health_player').html(data.health_player)
+                $('#health_enemy').html(data.health_enemy)
+                $('#spec_player').html(data.spec_player)
+                $('#spec_enemy').html(data.spec_enemy)
+                $('#poison_damage_player').html(data.poison_damage_player)
+                $('#poison_damage_enemy').html(data.poison_damage_enemy)
+                $('#frozen_player').html(data.frozen_player)
+                $('#frozen_enemy').html(data.frozen_enemy)                
+                $('#enemy_attack_log').html(data.enemy_attack_log)
+                $('#player_attack_log').html(data.player_attack_log)
+                console.log(data.player_attack_log)
+                console.log(data.enemy_attack_log)
+                console.log(data.player_attack_log == 'You have been defeated, you lost!')
+                if (data.player_attack_log == 'You have been defeated, you lose!' || data.enemy_attack_log == 'Enemy has been defeated, you win!')
+                    {
+                        $("#weaponform").hide()
+                        $("#startform").show()
+                    }
+            }
+        });
+    });
+</script>

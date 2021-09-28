@@ -4,6 +4,8 @@ import inspect
 RANGED = "ranged"
 MELEE = "melee"
 
+WEAPON_LST = ['guth', 'punch', 'blood', 'maul', 'korasi', 'dbow', 'dbolt', 'smoke', 'ice', 'sgs', 'dds', 'msb', 'dclaws', 'ags', 'onyx', 'zgs', 'surge', 'storm']
+
 class Weapon:
     """
     This is an abstract object.
@@ -14,6 +16,7 @@ class Weapon:
         self.freezing = False
         self.healing = False
         self.poisoning = False
+        self.hp_restriction = 1501
 
 
     def set_percentile(self):
@@ -39,7 +42,7 @@ class Weapon:
 
 
     def fighter_can_use(self, fighter):
-        return fighter.spec >= self.spec and (not fighter.frozen or self.type == RANGED)
+        return fighter.spec >= self.spec and (not fighter.frozen or self.type == RANGED) and (fighter.health < self.hp_restriction)
 
     
     def attack(self, attacker, defender):
@@ -51,7 +54,7 @@ class Weapon:
         # apply damage
         defender.take_damage(damage)
 
-        print("{} attacks {} with {} for {} damage.".format(attacker.name, defender.name, self.__class__.__name__, damage))
+        attack_log = "{} attacks {} with {} for {} damage.".format(attacker.name, defender.name, self.__class__.__name__, damage)
 
         # apply poison state
         if self.poisoned():
@@ -61,7 +64,7 @@ class Weapon:
         if defender.poisoned:
             # apply poison damage
             defender.take_damage(defender.poison_damage)
-            print(defender.name, ' suffers ', defender.poison_damage, ' from poison.')
+            attack_log += ' ' + defender.name + ' suffers ' + str(defender.poison_damage) + ' from poison.'
 
             # update or reset poison damage
             if defender.poison_damage == 32:
@@ -74,15 +77,17 @@ class Weapon:
         heal = self.calc_heal()
         if self.healing:
             if heal == 0:
-                print("Healing failed.")
+                attack_log += " Healing failed."
             else:
-                print("{} heals {} for {} health.".format(attacker.name, defender.name, heal))
+                attack_log += " {} heals {} for health.".format(attacker.name, heal)
 
         # apply heal
         attacker.take_heal(heal)
 
         # apply spec reduction
         attacker.apply_spec_reduction(self.spec)
+
+        return attack_log
 
 
 class Guth(Weapon):
@@ -146,6 +151,7 @@ class Blood(Weapon):
         else:
             damage = random.randint(281,330)
         self.damage_dealt = damage
+        return damage
 
     def calc_heal(self):
         heal = int(self.damage_dealt*.4)
@@ -403,6 +409,7 @@ class Surge(Weapon):
     def __init__(self):
         super().__init__()
         self.type = RANGED
+        self.hp_restriction = 250
     
     def calc_damage(self):
         percentile = self.percentile
@@ -410,6 +417,8 @@ class Surge(Weapon):
             damage = random.randint(200,350)
         else:
             damage = random.randint(351,500)
+        self.damage_dealt = damage
+        return damage
     
 class Storm(Weapon):
     def __init__(self):
