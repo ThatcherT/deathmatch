@@ -33,20 +33,10 @@ class Weapon:
         self.poisoning = False
         self.hp_restriction = 1501
 
-
-    # def set_percentile(self):
-    #     self.percentile = random.randint(0, 100)
     
     @property
     def percentile(self):
-        print('getting percentile')
         percentile = random.randint(0, 100)
-        print(percentile)
-        # percentile2 = random.randint(0, 100)
-        # percentile3 = random.randint(0, 100)
-        # print(percentile, percentile2, percentile3)
-        # print('percentile is ', percentile)
-        # print('percentile2 is ', percentile2)
         return percentile
 
 
@@ -734,26 +724,17 @@ class DeathmatchEnv(gym.Env):
     
     def is_legal(self, action):
         # check if action which is a string from weapons_lst, is legal
-        # print('checking if action:', action, 'is legal')
-        # print(type(action))
         player = self.get_current_player()
 
         # get list of weapons that player can use based on state of game
         # most importantly, being frozen restricts to ranged weapons and some weapons require spec
         available_weapons = player.available_weapons()
         if not type(action) == str:
-            # print(' this is not a string, lets see if we can get action from weaponlst')
             action = WEAPON_LST[action]
-        #     print(' got action', action)
-        # print('checking if action is in available_weapons')
-        # print('available weapons', available_weapons)
-        # print('action')
-        if action in available_weapons:
-            # print('IT IS')
-            
+
+        if action in available_weapons:           
             return True
         else:
-            # print('IT IS not')
             return False
 
     @property

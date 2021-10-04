@@ -1,0 +1,27 @@
+.move-area{/*normally use body*/
+  width: 10vw;
+  
+}
+.container {
+  width: 100%;
+}
+.player {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    background: #CCC;
+    color: rgb(202, 17, 17);
+    font-size: 30px;
+  }
+ .player:after { /*pupil*/
+    position: absolute;
+    bottom: 17px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+    content: " ";
+  }

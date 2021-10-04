@@ -83,7 +83,6 @@ def fighter_from_stats(health, spec, frozen, poison_damage, name):
     fighter.health = health
     fighter.spec = spec
     fighter.frozen = frozen
-    print('while getting fighter', 'frozen', frozen)
     fighter.poison_damage = poison_damage
     if poison_damage > 0:
         fighter.poisoned = True
@@ -101,8 +100,6 @@ def ppo_prediction(player):
     spec = ((player.spec * 2) - 100) / 100
     poison_damage = ((int(player.poison_damage) * 2) - 40) / 40
     frozen = ((int(player.frozen) * 2) - 1) / 1
-
-    print('health spec poison frozen', health, spec, poison_damage, frozen)
     
     # enemy metrics
     enemy_health = ((player.enemy.health * 2) - 1500) / 1500
@@ -111,6 +108,5 @@ def ppo_prediction(player):
 
     out = np.array([health, spec, poison_damage, frozen, enemy_health, enemy_spec, enemy_poison_damage])
     obs = np.append(out, player.legal_actions)
-    print('bos', obs)
     return ppo_model.predict(obs)
 

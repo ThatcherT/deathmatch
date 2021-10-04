@@ -50,31 +50,20 @@ def split_input(obs, split):
 
 
 def value_head(y):
-    # print('running value head')
     y = dense(y, FEATURE_SIZE)
-    # print('y', y)
-    # print('feature size', FEATURE_SIZE)
     vf = dense(y, 1, batch_norm = False, activation = 'tanh', name='vf')
     q = dense(y, ACTIONS, batch_norm = False, activation = 'tanh', name='q')
-    # print('vf', vf)
-    # print('q', q)
     return vf, q
 
 
 def policy_head(y, legal_actions):
-    # LETS MODIFY THIS TO MASK ILLEGAL ACTIONS
-    # print('running policy head')
     y = dense(y, FEATURE_SIZE)
-    # print('y', y)
-    # print('feature size', FEATURE_SIZE)
-    # print('legal actions', legal_actions)
 
     policy = dense(y, ACTIONS, batch_norm = False, activation = None, name='pi')
 
     mask = Lambda(lambda x: (1 - x) * -1e8)(legal_actions)
     
     policy = Add()([policy, mask])
-    # print('policy', policy)
     return policy
 
 
