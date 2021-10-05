@@ -1,4 +1,5 @@
-*
+_*
+base.zip
 !.gitignore
 !pretrained
 !pretrained/*/
