@@ -60,6 +60,7 @@ def attack(request):
         player.enemy = enemy
         enemy.enemy = player
         player_attack_log = player.attack()
+        health_player_before_attack = player.health
 
         if enemy.health <= 0:
             enemy_attack_log = 'Enemy has been defeated, you win!'
@@ -74,7 +75,19 @@ def attack(request):
         if player.health <= 0:
             player_attack_log = 'You have been defeated, you lose!'
 
-    return JsonResponse({'health_player': player.health, 'health_enemy': enemy.health, 'spec_player': player.spec, 'spec_enemy': enemy.spec, 'poison_damage_player': player.poison_damage, 'poison_damage_enemy': enemy.poison_damage, 'frozen_player': int(player.frozen), 'frozen_enemy': int(enemy.frozen), 'enemy_attack_log': enemy_attack_log, 'player_attack_log': player_attack_log})
+    return JsonResponse({
+        'health_player': player.health,
+        'health_enemy': enemy.health,
+        'spec_player': player.spec,
+        'spec_enemy': enemy.spec,
+        'poison_damage_player': player.poison_damage,
+        'poison_damage_enemy': enemy.poison_damage,
+        'frozen_player': int(player.frozen),
+        'frozen_enemy': int(enemy.frozen),
+        'enemy_attack_log': enemy_attack_log,
+        'player_attack_log': player_attack_log,
+        'health_player_before_attack': health_player_before_attack,
+         })
 
 
 def fighter_from_stats(health, spec, frozen, poison_damage, name):

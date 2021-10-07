@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> Fight </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% comment %}
  This is how you load style sheets with django 
@@ -11,9 +13,277 @@
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 {% endcomment %}
 <link rel="stylesheet" href="{% static 'battle/css/styles.css' %}">
-<script src="{% static 'battle/js/eyes.js' %}"></script>
+<title> Fight </title>
 </head> 
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="health-box">
+                <div class="health-bar-red"></div>
+                <div class="health-bar-blue"></div>
+                <div class="health-bar"></div>
+                <div class="health-bar-text"></div>
+            </div>
+            <p id="health_player" style="display:none;"></p>
+            Player Spec<p id="spec_player" style="color: blue"></p>
+            <p id="poison_damage_player" hidden="true"></p>
+            <p id="frozen_player" hidden="true"></p>
+        </div>
+        <div class="col">
+            <div class="log"></div>
+            <form action="" id='weaponform'>
+                {% csrf_token %}
+                <label id="weapon-label" for="weapon" style="display:none;">Weapon:</label>
+                <input type="text" id="weapon-input" name="weapon" style="display:none"><br><br>
+                <input id="battle-button" type="submit" value="Begin">
+            </form>
+        </div>
+        <div class="col">
+            <div class="enemy-health-box">
+                <div class="enemy-health-bar-red"></div>
+                <div class="enemy-health-bar-blue"></div>
+                <div class="enemy-health-bar"></div>
+                <div class="enemy-health-bar-text"></div>
+            </div>
+            <p id="health_enemy" style="display:none"></p>
+            Enemy Spec<p id="spec_enemy" style="color: blue"></p>
+            <p id="poison_damage_enemy" hidden="true"></p>
+            <p id="frozen_enemy" hidden="true"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    Special Weapons
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    MAUL
+                </h3>
+                <p>
+                    spec 100
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    DBOW
+                </h3>
+                <p>
+                    spec 75
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    KORASI
+                </h3>
+                <p>
+                    spec 75
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    MSB
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    AGS
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    ZGS
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    DCLAWS
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    SGS
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    DDS
+                </h3>
+                <p>
+                    spec 25
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    Normal Weapons
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="text-center">
+                    <h3>
+                        DBOLT
+                    </h3>
+                    <p>
+                        damage
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <h3>
+                        PUNCH
+                    </h3>
+                    <p>
+                        spec 50
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <h3>
+                        SMOKE
+                    </h3>
+                    <p>
+                        spec 50
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="text-center">
+                    <h3>
+                        SURGE
+                    </h3>
+                    <p>
+                        damage
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <h3>
+                        ICE
+                    </h3>
+                    <p>
+                        spec 50
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <h3>
+                        STORM
+                    </h3>
+                    <p>
+                        spec 50
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    Healing Weapons
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    SGS
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    BLOOD
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    GUTH
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    ONYX
+                </h3>
+                <p>
+                    spec 50
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 {% comment %} These variables are initialized as empty
 later they are updated using jquery
 
@@ -40,60 +310,34 @@ you would do this:
 
  {% endcomment %}
 {% comment %}  here is an example of using a class loaded from stylesheet located in battle/static/battle/css {% endcomment %}
-<section class="move-area">
-  <div class='.container'>
-    <div class='player'></div>
-    <div class='player'></div>
-  </div>
-</section>
-<p id="enemy_attack_log" style="color:red;"></p>
-<p id="player_attack_log" style="color:black;"></p>
-<p id="enemy_attack_log2" style="color:red;"></p>
-<p id="player_attack_log2" style="color:black;"></p>
-Player Health
-<p id="health_player" style="color: green"></p>
-Enemy Health<p id="health_enemy" style="color: red"></p>
-Enemy Spec<p id="spec_enemy" style="color: blue"></p>
-Player Spec<p id="spec_player" style="color: blue"></p>
-<p id="poison_damage_player" hidden="true"></p>
-<p id="poison_damage_enemy" hidden="true"></p>
-<p id="frozen_player" hidden="true"></p>
-<p id="frozen_enemy" hidden="true"></p>
 
 
-
-<form action="" id='weaponform'>
-  {% csrf_token %}
-  <label id="weapon-label" for="weapon" hidden="True">Weapon:</label>
-  <input type="text" id="weapon-input" name="weapon" hidden="True"><br><br>
-  <input id="battle-button" type="submit" value="Begin">
-</form>
-
-    
-
+<script src="{% static 'battle/js/healthBar.js' %}"></script>
 <script>  
 
     $("#weaponform").submit(function(e){
+        // hide weapon input and label
+        $("#weapon-label").css("display", "none");
+        $("#weapon-input").css("display", "none");
         e.preventDefault();
         let button_val = $("#battle-button").val();
         let csrftoken = "{{ csrf_token }}";
 
         // if button is "Begin", set url variable and send data to url with .ajax
         if (button_val == "Begin"){
+            // apply change, only needed if starting game after ending one
+            $(".log").empty()
+            applyChange(1500, false)
+            applyChange(1500, true)
             // set url to start battle api endpoint
             // this will return environment variables after the bot has made its first move
-            var url = "{% url 'start-battle' %}";
-            // show hidden weapon input and label
-            $("#weapon-label").show();
-            $("#weapon-input").show();
-            // set button value to "Choose Weapon"
             $("#battle-button").val("Choose Weapon");
+            var url = "{% url 'start-battle' %}";
         }
             
         else if (button_val == "Choose Weapon"){
             var url = "{% url 'attack' %}";
         }
-        console.log($("#weapon-input").val());
         $.ajax({
             type: "POST",
             url: url,
@@ -102,6 +346,7 @@ Player Spec<p id="spec_player" style="color: blue"></p>
                 // send environment variables to back end for updating and opponent attack
                 weapon: $('#weapon-input').val(),
                 health_player: $('#health_player').html(),
+                
                 health_enemy: $('#health_enemy').html(),
                 spec_player: $('#spec_player').html(),
                 spec_enemy: $('#spec_enemy').html(),
@@ -112,32 +357,47 @@ Player Spec<p id="spec_player" style="color: blue"></p>
             },
             success: function(data){
                 if (data.error == 'Illegal weapon'){
-                    alert('Illegal weapon')
+                    $("#weapon-label").css("display", "block");
+                    $("#weapon-input").css("display", "block");
+                    $('.log').append('<p> You cannot use that weapon </p>')
                 }
-                // update html with new values if weapon is legal
-                $('#health_player').html(data.health_player)
-                $('#health_enemy').html(data.health_enemy)
-                $('#spec_player').html(data.spec_player)
-                $('#spec_enemy').html(data.spec_enemy)
-                $('#poison_damage_player').html(data.poison_damage_player)
-                $('#poison_damage_enemy').html(data.poison_damage_enemy)
-                $('#frozen_player').html(data.frozen_player)
-                $('#frozen_enemy').html(data.frozen_enemy)                
-                $('#enemy_attack_log').html(data.enemy_attack_log)
-                $('#player_attack_log').html(data.player_attack_log)
-                // if either player ends up with zero health, the game is over and will be apparent in attack log
+                else {
+                    // update html with new values if weapon is legal
+                    $('.log').append('<p>', data.player_attack_log, '</p>');
+                    $('#spec_player').html(data.spec_player)
+                    $('health_player').html(data.health_player_before_attack)
+                    applyChange(data.health_player_before_attack)
+                    $('#health_enemy').html(data.health_enemy)
+                    applyChange(data.health_enemy, true)
+                    $('#poison_damage_enemy').html(data.poison_damage_enemy)
+                    $('#frozen_enemy').html(data.frozen_enemy)
+                    // wait for one second
+                    setTimeout(function(){
+                        // update html with new values
+                        $('.log').append('<p>', data.enemy_attack_log, '</p>');
+                        $('#spec_enemy').html(data.spec_enemy)
+                        $('#health_player').html(data.health_player)
+                        applyChange(data.health_player, false)
+                        $('#poison_damage_player').html(data.poison_damage_player)
+                        $('#frozen_player').html(data.frozen_player)
+                        $("#weapon-label").css("display", "block");
+                        $("#weapon-input").css("display", "block");
+                    }, 1000)
+                    // if either player ends up with zero health, the game is over and will be apparent in attack log
+                }                
                 if (data.player_attack_log == 'You have been defeated, you lose!' || data.enemy_attack_log == 'Enemy has been defeated, you win!')
-                    {
-                        // update button_val html to "Attack"
-                        $("#battle-button").val("Begin")
-                        // show weapon input box and label
-                        $("#weapon-label").hide()
-                        $("#weapon-input").hide()
-                    }
+                        {
+                            // update button_val html to "Attack"
+                            $("#battle-button").val("Begin")
+                            // show weapon input box and label
+                            $("#weapon-label").hide()
+                            $("#weapon-input").hide()
+                        }
             }
         });
         
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 </body>
 </html>
