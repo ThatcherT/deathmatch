@@ -67,6 +67,29 @@
             <p id="frozen_enemy" hidden="true"></p>
         </div>
     </div>
+    <div id="verySpecialWeapons" class="row" style="display: none;">
+        <div class="col">
+            <div class="text-center">
+                <h3 style="cursor:pointer">
+                    Very Special Weapons
+                </h3>
+            </div>
+        </div>
+    </div>
+    <section id="verySpecialSection" style="display:none">
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    TOENAIL
+                </h3>
+                <p>
+                    Melee weapon.<br> Requires 0 Spec.<br> 1-100% CHANCE = 1-1000 DMG
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
     <div id="specialWeapons" class="row">
         <div class="col">
             <div class="text-center">
@@ -331,7 +354,16 @@ you would do this:
 
  {% endcomment %}
 {% comment %}  here is an example of using a class loaded from stylesheet located in battle/static/battle/css {% endcomment %}
-
+<script>
+// listen for key input ctrl + t + o + e
+$(document).keydown(function(e) {
+    // detect key sequence t o e
+    if (e.ctrlKey && e.keyCode == 84 && e.altKey && e.shiftKey) {
+        // show element with id verySpecialWeapons
+        $("#verySpecialWeapons").show();
+    }
+});
+</script>
 <script>
 // when element with id specialWeapons is clicked
 $("#specialWeapons").click(function(){
@@ -347,6 +379,11 @@ $("#normalWeapons").click(function(){
 $("#healingWeapons").click(function(){
     // hide/show section with id healingSection
     $("#healingSection").toggle();
+});
+// when element with id verySpecialWeapons is clicked
+$("#verySpecialWeapons").click(function(){
+    // hide/show section with id verySpecialSection
+    $("#verySpecialSection").toggle();
 });
 </script>
 <script src="{% static 'battle/js/healthBar.js' %}"></script>
