@@ -30,7 +30,10 @@ class Fighter:
     @property
     def illegal_reason(self):
         weapon = self.current_weapon
-        reason = weapon.fighter_can_use_reason(self)
+        if not weapon:
+            reason = "This is not a weapon."
+        else:
+            reason = weapon.fighter_can_use_reason(self)
         return reason
         
 

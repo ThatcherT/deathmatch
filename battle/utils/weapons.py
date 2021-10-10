@@ -71,7 +71,7 @@ class Weapon:
         elif fighter.health > self.hp_restriction:
             return "You must be below {} hp to use this weapon.".format(self.hp_restriction)
         else:
-            return "You can use this weapon."
+            return "This is not a weapon."
 
     def attack(self, attacker, defender):
         # refresh percentile and caluclate damage
