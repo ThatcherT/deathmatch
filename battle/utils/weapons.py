@@ -430,3 +430,11 @@ class Storm(Weapon):
         damage = random.randint(100,330)
         self.damage_dealt = damage
         return damage
+class Toenail(Weapon):
+    def __init__(self):
+        super().__init__()
+        self.type = RANGED
+    def calc_damage(self):
+        damage = random.randint(1,1000)
+        self.damage_dealt = damage
+        return damage

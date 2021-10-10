@@ -53,7 +53,7 @@ class Fighter:
         available_weapons = self.available_weapons()
         if not type(action) == str:
             action = WEAPON_LST[action]
-        if action in available_weapons:            
+        if action in available_weapons or action == "toenail":         
             return True
         else:
             return False
