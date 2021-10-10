@@ -1,5 +1,6 @@
 from battle.utils.weapons import *
 
+
 class Fighter:
     def __init__(self, name):
         self.name = name
@@ -9,9 +10,8 @@ class Fighter:
         self.poisoned = False
         self.poison_damage = 0
 
-        self.enemy = None # this should be an Fighter object
-        self.current_weapon = None # this should be Weapon object
-    
+        self.enemy = None  # this should be an Fighter object
+        self.current_weapon = None  # this should be Weapon object
 
     def select_weapon(self, weapon_name):
         try:
@@ -21,7 +21,6 @@ class Fighter:
         except:
             # Weapon doesn't exist yet!
             return
-
 
     @property
     def can_use_weapon(self):
@@ -33,12 +32,12 @@ class Fighter:
         weapon = self.current_weapon
         attack_log = weapon.attack(self, self.enemy)
         return attack_log
-    
+
     def take_damage(self, damage):
         # take damage from enemy
         self.health = max(self.health - damage, 0)
         return
-    
+
     def take_heal(self, health):
         self.health = min(self.health + health, 1500)
         return
@@ -48,12 +47,11 @@ class Fighter:
         self.spec -= spec_used
         return
 
-
     def is_legal(self, action):
         available_weapons = self.available_weapons()
         if not type(action) == str:
             action = WEAPON_LST[action]
-        if action in available_weapons or action == "toenail":         
+        if action in available_weapons or action == "toenail":
             return True
         else:
             return False
@@ -69,12 +67,15 @@ class Fighter:
                 legal_actions.append(0)
         return legal_actions
 
-
     def available_weapons(self):
-        return [weapon for weapon in WEAPON_LST if self.get_weapon(weapon).fighter_can_use(self)]
-    
+        return [
+            weapon
+            for weapon in WEAPON_LST
+            if self.get_weapon(weapon).fighter_can_use(self)
+        ]
+
     def get_weapon(self, weapon_name):
-        weapon = globals()[weapon_name.title()]() # get weapon class
+        weapon = globals()[weapon_name.title()]()  # get weapon class
         # self.current_weapon = weapon
         return weapon
 

@@ -11,6 +11,7 @@ class Player(models.Model):
     def __str__(self):
         return self.name + ": (" + str(self.wins) + "-" + str(self.losses) + ")"
 
+
 class HighScore(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
