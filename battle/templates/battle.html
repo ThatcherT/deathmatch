@@ -461,10 +461,10 @@ $("#verySpecialWeapons").click(function(){
                 frozen_enemy: $('#frozen_enemy').html(),
             },
             success: function(data){
-                if (data.error == 'Illegal weapon'){
+                if (data.error){
                     $("#weapon-label").css("display", "block");
                     $("#weapon-input").css("display", "block");
-                    $('.log').append('<p> You cannot use that weapon </p>')
+                    $('.log').append('<p>', data.error, '</p>')
                 }
                 else {
                     // update html with new values if weapon is legal

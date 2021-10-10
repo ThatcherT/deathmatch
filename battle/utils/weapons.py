@@ -60,8 +60,18 @@ class Weapon:
         return (
             fighter.spec >= self.spec
             and (not fighter.frozen or self.type == RANGED)
-            and (fighter.health < self.hp_restriction)
+            and (fighter.health <= self.hp_restriction)
         )
+    
+    def fighter_can_use_reason(self, fighter):
+        if fighter.spec < self.spec:
+            return "You don't have enough spec to use this weapon."
+        elif fighter.frozen and not self.type == RANGED:
+            return "You are frozen. You must use a ranged weapon."
+        elif fighter.health > self.hp_restriction:
+            return "You must be below {} hp to use this weapon.".format(self.hp_restriction)
+        else:
+            return "You can use this weapon."
 
     def attack(self, attacker, defender):
         # refresh percentile and caluclate damage

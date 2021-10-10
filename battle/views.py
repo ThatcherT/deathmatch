@@ -128,7 +128,10 @@ def attack(request):
         # check if weapon is legal
         legal_weapon = player.is_legal(weapon)
         if not legal_weapon:
-            return JsonResponse({"error": "Illegal weapon"})
+            # get reason for illegal weapon
+            reason = player.illegal_reason
+            print(reason)
+            return JsonResponse({"error": reason})
 
         enemy = fighter_from_stats(
             health_enemy, spec_enemy, frozen_enemy, poison_damage_enemy, name="Bot"

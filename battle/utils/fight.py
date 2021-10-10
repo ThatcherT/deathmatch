@@ -26,6 +26,13 @@ class Fighter:
     def can_use_weapon(self):
         # return bool if fighter can use weapon
         return self.current_weapon.fighter_can_use(self)
+    
+    @property
+    def illegal_reason(self):
+        weapon = self.current_weapon
+        reason = weapon.fighter_can_use_reason(self)
+        return reason
+        
 
     def attack(self):
         # use weapon to attack enemy, and if needed, heal self
