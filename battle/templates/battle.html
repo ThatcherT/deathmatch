@@ -67,15 +67,16 @@
             <p id="frozen_enemy" hidden="true"></p>
         </div>
     </div>
-    <div class="row">
+    <div id="specialWeapons" class="row">
         <div class="col">
             <div class="text-center">
-                <h3>
+                <h3 style="cursor:pointer">
                     Special Weapons
                 </h3>
             </div>
         </div>
     </div>
+    <section id="specialSection" style="display:none">
     <div class="row">
         <div class="col">
             <div class="text-center">
@@ -83,7 +84,7 @@
                     MAUL
                 </h3>
                 <p>
-                    spec 100
+                    Melee weapon.<br> Requires 100 Spec.<br> 1-13% CHANCE = 250-375 DMG || 14-74% CHANCE = 376-600 DMG || 75-100% CHANCE = 601-750 DMG
                 </p>
             </div>
         </div>
@@ -95,7 +96,7 @@
                     DBOW
                 </h3>
                 <p>
-                    spec 75
+                    Ranged weapon.<br> Requires 75 Spec.<br> 1-15% CHANCE = 200-240 DMG || 16-70% CHANCE = 441-600 DMG || 71-100% CHANCE = 601-700 DMG
                 </p>
             </div>
         </div>
@@ -105,7 +106,7 @@
                     KORASI
                 </h3>
                 <p>
-                    spec 75
+                    Ranged weapon.<br> Requires 75 Spec.<br> 1-10% CHANCE = 1-350 DMG || 11-71% CHANCE = 351-650 DMG || 72-100% CHANCE = 651-710 DMG
                 </p>
             </div>
         </div>
@@ -117,7 +118,7 @@
                     MSB
                 </h3>
                 <p>
-                    spec 50
+                    Ranged weapon.<br> Requires 50 Spec.<br> 1-20% CHANCE = 150-300 DMG || 21-81% CHANCE = 300-460 DMG || 82-100% CHANCE = 460-600 DMG
                 </p>
             </div>
         </div>
@@ -127,7 +128,7 @@
                     AGS
                 </h3>
                 <p>
-                    spec 50
+                    Melee weapon.<br> Requires 50 Spec.<br> 1-20% CHANCE = 150-200 DMG || 21-61% CHANCE = 201-400 DMG || 62-100% CHANCE = 401-510 DMG
                 </p>
             </div>
         </div>
@@ -137,7 +138,7 @@
                     ZGS
                 </h3>
                 <p>
-                    spec 50
+                    Melee weapon.<br> Requires 50 Spec. Freezes opponent.<br> 1-20% CHANCE = 1-220 DMG || 21-80% CHANCE = 221-330 DMG || 81-100% CHANCE = 331-420 DMG
                 </p>
             </div>
         </div>
@@ -147,7 +148,7 @@
                     DCLAWS
                 </h3>
                 <p>
-                    spec 50
+                    Melee weapon.<br> Requires 50 Spec.<br> 1-20% CHANCE = 4-200 DMG || 21-100% CHANCE = 204-520 DMG
                 </p>
             </div>
         </div>
@@ -157,7 +158,7 @@
                     SGS
                 </h3>
                 <p>
-                    spec 50
+                    Melee weapon.<br> Requires 50 Spec.<br> 1-15% CHANCE = 50-200 DMG || 16-70% CHANCE = 201-350 DMG || 71-100% CHANCE = 351-450 DMG
                 </p>
             </div>
         </div>
@@ -169,7 +170,50 @@
                     DDS
                 </h3>
                 <p>
-                    spec 25
+                    Melee weapon.<br> Requires 25 Spec.<br> 1-20% CHANCE = 2-200 DMG || 21-71% CHANCE = 201-350 DMG || 72-100% CHANCE = 352-460 DMG
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+    <div id="normalWeapons" class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3 style="cursor:pointer">
+                    Normal Weapons
+                </h3>
+            </div>
+        </div>
+    </div>
+    <section id="normalSection" style="display:none">
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    DBOLT
+                </h3>
+                <p>
+                    Ranged weapon.<br> 1-12% CHANCE = 1-175 DMG || 13-80% CHANCE = 176-374 DMG || 81-100% CHANCE = 375-600 DMG
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    PUNCH
+                </h3>
+                <p>
+                    Melee weapon.<br> 1-20% CHANCE = 1-125 DMG || 21-100% CHANCE = 126-225 DMG
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    SMOKE
+                </h3>
+                <p>
+                    Ranged weapon.<br> 70% poison chance.<br> 1-20% CHANCE = 1-200 DMG || 21-70% CHANCE = 201-300 DMG || 71-100% CHANCE = 301-350 DMG
                 </p>
             </div>
         </div>
@@ -178,84 +222,45 @@
         <div class="col">
             <div class="text-center">
                 <h3>
-                    Normal Weapons
+                    SURGE
                 </h3>
+                <p>
+                    Ranged weapon.<br> Can only be used if your hp is 250 or less.<br> 1-40% CHANCE = 200-350 DMG || 41-100% CHANCE = 351-500 DMG
+                </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <h3>
-                        DBOLT
-                    </h3>
-                    <p>
-                        damage
-                    </p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-center">
-                    <h3>
-                        PUNCH
-                    </h3>
-                    <p>
-                        spec 50
-                    </p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-center">
-                    <h3>
-                        SMOKE
-                    </h3>
-                    <p>
-                        spec 50
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <h3>
-                        SURGE
-                    </h3>
-                    <p>
-                        damage
-                    </p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-center">
-                    <h3>
-                        ICE
-                    </h3>
-                    <p>
-                        spec 50
-                    </p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="text-center">
-                    <h3>
-                        STORM
-                    </h3>
-                    <p>
-                        spec 50
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col">
             <div class="text-center">
                 <h3>
+                    ICE
+                </h3>
+                <p>
+                    Ranged weapon.<br> Freezes opponent.<br> 1-20% CHANCE = 1-100 DMG || 21-81% CHANCE = 101-250 DMG || 82-100% CHANCE = 251-330 DMG
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-center">
+                <h3>
+                    STORM
+                </h3>
+                <p>
+                    Ranged weapon.<br> 1-100% CHANCE = 100-330 DMG
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+    <div id="healingWeapons" class="row">
+        <div class="col">
+            <div class="text-center">
+                <h3 style="cursor:pointer">
                     Healing Weapons
                 </h3>
             </div>
         </div>
     </div>
+    <section id="healingSection" style="display:none">
     <div class="row">
         <div class="col">
             <div class="text-center">
@@ -263,7 +268,7 @@
                     SGS
                 </h3>
                 <p>
-                    spec 50
+                    Melee weapon.<br> Requires 50 Spec.<br> 1-15% CHANCE = 50-200 DMG || 16-70% CHANCE = 201-350 DMG || 71-100% CHANCE = 351-450 DMG
                 </p>
             </div>
         </div>
@@ -273,7 +278,7 @@
                     BLOOD
                 </h3>
                 <p>
-                    spec 50
+                    Ranged weapon.<br> 100% chance to heal 40% of damage dealt.<br> 1-20% CHANCE = 1-100 DMG || 21-81% CHANCE = 101-280 DMG || 82-100% CHANCE = 281-330 DMG
                 </p>
             </div>
         </div>
@@ -283,7 +288,7 @@
                     GUTH
                 </h3>
                 <p>
-                    spec 50
+                    Melee weapon.<br> 40% chance to heal 100% of damage dealt.<br> 1-20% CHANCE = 1-149 DMG || 21-81% CHANCE = 150-275 DMG || 82-100% CHANCE = 276-320 DMG
                 </p>
             </div>
         </div>
@@ -293,11 +298,12 @@
                     ONYX
                 </h3>
                 <p>
-                    spec 50
+                    Ranged weapon.<br> 50% chance to heal 50% of damage dealt.<br> 1-20% CHANCE = 1-125 DMG || 21-61% CHANCE = 126-275 DMG || 62-100% CHANCE = 276-375 DMG
                 </p>
             </div>
         </div>
     </div>
+    </section>
 </div>
 {% comment %} These variables are initialized as empty
 later they are updated using jquery
@@ -326,7 +332,23 @@ you would do this:
  {% endcomment %}
 {% comment %}  here is an example of using a class loaded from stylesheet located in battle/static/battle/css {% endcomment %}
 
-
+<script>
+// when element with id specialWeapons is clicked
+$("#specialWeapons").click(function(){
+    // hide/show section with id specialSection
+    $("#specialSection").toggle();
+});
+// when element with id normalWeapons is clicked
+$("#normalWeapons").click(function(){
+    // hide/show section with id normalSection
+    $("#normalSection").toggle();
+});
+// when element with id healingWeapons is clicked
+$("#healingWeapons").click(function(){
+    // hide/show section with id healingSection
+    $("#healingSection").toggle();
+});
+</script>
 <script src="{% static 'battle/js/healthBar.js' %}"></script>
 <script>
     $("#playerForm").submit(function(e){
