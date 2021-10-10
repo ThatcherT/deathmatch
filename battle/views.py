@@ -4,6 +4,7 @@ from battle.utils.fight import Fighter
 from battle.utils.weapons import *
 from stable_baselines import PPO1
 import numpy as np
+from battle.models import Player
 
 ppo_model = PPO1.load("zoo/deathmatch/best_model.zip", env=None)
 # Create your views here.
@@ -12,10 +13,46 @@ def home(request):
     return render(request, 'home.html')
 
 def battle(request):
-    return render(request, 'battle.html')
+    players = Player.objects.all()
+    # aggregate all wins of all players
+    total_wins = sum([player.wins for player in players])
+    total_losses = sum([player.losses for player in players])
+
+    context = {
+        'players': players,
+        'total_wins': total_wins,
+        'total_losses': total_losses,
+    }
+    return render(request, 'battle.html', context)
+
+
+def get_player(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        player, created = Player.objects.get_or_create(name=name)
+        request.session['player'] = player.name
+        return JsonResponse({'personal_wins': player.wins, 'personal_losses': player.losses})
+
+
+def update_stats(request):
+    if request.method == 'POST':
+        # get player from name
+        player = Player.objects.get(name=request.POST['name'])
+        # update stats
+        print(request.POST)
+        if request.POST['win'] == 'true':
+            player.wins += 1
+        else:
+            player.losses += 1
+        player.save()
+        total_wins = sum([player.wins for player in Player.objects.all()])
+        total_losses = sum([player.losses for player in Player.objects.all()])
+        print('totalwins', total_wins)
+        print('totallosses', total_losses)
+        return JsonResponse({'total_wins': total_wins, 'total_losses': total_losses, 'personal_wins': player.wins, 'personal_losses': player.losses})
 
 def start_battle(request):
-    player = fighter_from_stats(health=1500, spec=100, frozen=False, poison_damage=0, name="Player")
+    player = fighter_from_stats(health=1500, spec=100, frozen=False, poison_damage=0, name=request.session.get('player'))
 
     enemy = fighter_from_stats(health=1500, spec=100, frozen=False, poison_damage=0, name="Bot")
     player.enemy = enemy
@@ -33,7 +70,6 @@ def start_battle(request):
 
 def attack(request):
     if request.method == 'POST':
-        print(request.POST)
         # get selected weapon
         weapon = request.POST['weapon'].lower()
 

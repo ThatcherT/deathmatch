@@ -19,6 +19,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
+            <div class="text-center">
+                <p>Overall <span id="total_wins">{{ total_wins }}</span> - <span id="total_losses">{{ total_losses }}</span></p>
+                <p id="personal_stats" style="display: none;"><span id="name"></span> <span id="personal_wins"></span> - <span id="personal_losses"></span></p>
+                <form action="" id="playerForm">
+                    {% csrf_token %}
+                    <label for="playerName">Choose Your Fighter</label>
+                    <input type="text" id="playerName" name="playerName" value="{{ player_name }}">
+                    <input id="player-submit" type="submit" value="Submit">
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <div class="health-box">
                 <div class="health-bar-red"></div>
                 <div class="health-bar-blue"></div>
@@ -32,11 +47,11 @@
         </div>
         <div class="col">
             <div class="log"></div>
-            <form action="" id='weaponform'>
+            <form action="" id='weaponForm'>
                 {% csrf_token %}
                 <label id="weapon-label" for="weapon" style="display:none;">Weapon:</label>
-                <input type="text" id="weapon-input" name="weapon" style="display:none"><br><br>
-                <input id="battle-button" type="submit" value="Begin">
+                <input type="text" id="weapon-input" name="weapon" style="display:none;"><br><br>
+                <input id="battleButton" type="submit" value="Begin" style="display:none;">
             </form>
         </div>
         <div class="col">
@@ -313,14 +328,45 @@ you would do this:
 
 
 <script src="{% static 'battle/js/healthBar.js' %}"></script>
-<script>  
+<script>
+    $("#playerForm").submit(function(e){
+        e.preventDefault();
+        let playerName = $("#playerName").val();
+        let csrftoken = "{{ csrf_token }}";
+        // do ajax request to create player object and update html with player name
+        $.ajax({
+            url: "{% url 'get-player' %}",
+            type: "POST",
+            headers: {'X-CSRFToken': csrftoken },
+            data: {
+                "name": playerName
+            },
+            success: function(data){
+                let personal_losses = data.personal_losses;
+                let personal_wins = data.personal_wins;
+                // update personal wins and losses and show html
+                $("#personal_losses").text(personal_losses);
+                $("#personal_wins").text(personal_wins);
+                $('#name').text(playerName);
+                $('#personal_stats').css('display', 'block');
 
-    $("#weaponform").submit(function(e){
+                // hide form
+                $("#playerForm").css("display", "none");
+
+                // show battle button
+                $("#battleButton").css("display", "block");
+
+            }
+        });
+    });
+</script>
+<script>  
+    $("#weaponForm").submit(function(e){
         // hide weapon input and label
         $("#weapon-label").css("display", "none");
         $("#weapon-input").css("display", "none");
         e.preventDefault();
-        let button_val = $("#battle-button").val();
+        let button_val = $("#battleButton").val();
         let csrftoken = "{{ csrf_token }}";
 
         // if button is "Begin", set url variable and send data to url with .ajax
@@ -331,7 +377,7 @@ you would do this:
             applyChange(1500, true)
             // set url to start battle api endpoint
             // this will return environment variables after the bot has made its first move
-            $("#battle-button").val("Choose Weapon");
+            $("#battleButton").val("Choose Weapon");
             var url = "{% url 'start-battle' %}";
         }
             
@@ -382,20 +428,46 @@ you would do this:
                         $('#frozen_player').html(data.frozen_player)
                         $("#weapon-label").css("display", "block");
                         $("#weapon-input").css("display", "block");
+                        if (data.player_attack_log == 'You have been defeated, you lose!' || data.enemy_attack_log == 'Enemy has been defeated, you win!')
+                            {
+                                if (data.player_attack_log == 'You have been defeated, you lose!')
+                                    {
+                                        console.log('player lost')
+                                        var win = false;
+                                    }
+                                else
+                                    {
+                                        console.log('player won')
+                                        var win = true;
+                                    }
+                                // update stats with ajax request
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'update-stats' %}",
+                                    headers: {'X-CSRFToken': csrftoken },
+                                    data: {
+                                        win: win,
+                                        health_player: data.health_player,
+                                        name: $('#name').text(),
+                                    },
+                                    success: function(data){
+                                        // update html with new values
+                                        $('#total_wins').html(data.total_wins)
+                                        $('#total_losses').html(data.total_losses)
+                                        $('#personal_wins').html(data.personal_wins)
+                                        $('#personal_losses').html(data.personal_losses)
+                                    }
+                                })
+                                // update button_val html to "Attack"
+                                $("#battleButton").val("Begin")
+                                // show weapon input box and label
+                                $("#weapon-label").hide()
+                                $("#weapon-input").hide()
+                            }
                     }, 1000)
-                    // if either player ends up with zero health, the game is over and will be apparent in attack log
                 }                
-                if (data.player_attack_log == 'You have been defeated, you lose!' || data.enemy_attack_log == 'Enemy has been defeated, you win!')
-                        {
-                            // update button_val html to "Attack"
-                            $("#battle-button").val("Begin")
-                            // show weapon input box and label
-                            $("#weapon-label").hide()
-                            $("#weapon-input").hide()
-                        }
             }
-        });
-        
+        })        
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
