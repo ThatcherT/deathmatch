@@ -1,0 +1,69 @@
+.health-box {
+    background-color: #ccc;
+    height: 30px;
+    width: 500px;
+    margin: 0 auto;
+    border: solid 1px #aaa;
+  }
+  
+  .health-bar {
+    background-color: #007f00;
+    width: inherit;
+    height: 28px;
+    position: relative;
+    bottom: 56px;
+  }
+  
+  .health-bar-red {
+    width: 100%;
+    height: 100%;
+    background-color: #cc0000;
+  }
+  
+  .health-bar-blue {
+    width: 100%;
+    height: 100%;
+    background-color: #3bd3df;
+    bottom: 28px;
+    position: relative;
+  }
+
+  .health-bar-text {
+    position: relative;
+    bottom: 80px;
+  }
+
+  .enemy-health-box {
+    background-color: #ccc;
+    height: 30px;
+    width: 500px;
+    margin: 0 auto;
+    border: solid 1px #aaa;
+  }
+  
+  .enemy-health-bar {
+    background-color: #007f00;
+    width: inherit;
+    height: 28px;
+    position: relative;
+    bottom: 56px;
+  }
+  
+  .enemy-health-bar-red {
+    width: 100%;
+    height: 100%;
+    background-color: #cc0000;
+  }
+  
+  .enemy-health-bar-blue {
+    width: 100%;
+    height: 100%;
+    background-color: #3bd3df;
+    bottom: 28px;
+    position: relative;
+  }
+
+  .enemy-health-bar-text {
+    position: relative;
+    bottom: 80px;
+  }
