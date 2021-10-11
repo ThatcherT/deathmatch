@@ -85,6 +85,11 @@ def start_battle(request):
     enemy.select_weapon(weapon)
 
     enemy_attack_log = enemy.attack()
+
+    # recommend weapon for player
+    choice = ppo_prediction(player)
+    recommended_weapon = WEAPON_LST[choice[0]]
+    
     return JsonResponse(
         {
             "health_player": player.health,
@@ -96,6 +101,7 @@ def start_battle(request):
             "frozen_player": int(player.frozen),
             "frozen_enemy": int(enemy.frozen),
             "enemy_attack_log": enemy_attack_log,
+            "recommended_weapon": recommended_weapon,
         }
     )
 
@@ -153,6 +159,11 @@ def attack(request):
 
         if player.health <= 0:
             player_attack_log = "You have been defeated, you lose!"
+        
+        # get recommendation for next move
+        choice = ppo_prediction(player)
+        recommended_weapon = WEAPON_LST[choice[0]]
+        
 
     return JsonResponse(
         {
@@ -167,6 +178,7 @@ def attack(request):
             "enemy_attack_log": enemy_attack_log,
             "player_attack_log": player_attack_log,
             "health_player_before_attack": health_player_before_attack,
+            "recommended_weapon": recommended_weapon,
         }
     )
 
