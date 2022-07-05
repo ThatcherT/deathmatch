@@ -6,7 +6,7 @@ cached-property==1.5.2
 certifi==2021.5.30
 cloudpickle==2.0.0
 cycler==0.10.0
-Django==3.2.7
+Django==3.2.14
 gast==0.2.2
 google-pasta==0.2.0
 grpcio==1.40.0
